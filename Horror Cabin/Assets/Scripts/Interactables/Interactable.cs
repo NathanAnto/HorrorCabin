@@ -1,40 +1,48 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-[System.Serializable]
-public class Interactable : MonoBehaviour
+namespace Interactables
 {
-    [SerializeField] public new string name;
-    [SerializeField] public bool isInteractable;
-
-    private PlayerInteraction playerInteraction;
-
-    private void Start() {
-        playerInteraction = GameObject.FindWithTag("Player").GetComponent<PlayerInteraction>();
-    }
-
-    public void InteractWith() {
-        Debug.Log("Interacted with " + name);
-    }
-    
-    public void ChangeState() {
-        isInteractable = !isInteractable;
-    }
-
-    private void OnTriggerStay2D(Collider2D other)
+    [System.Serializable]
+    public class Interactable : MonoBehaviour
     {
-        if (other.tag.Equals("Player")) {
-            playerInteraction.currentInteractable = this;
-            
-            if (Input.GetKeyDown(KeyCode.E)) InteractWith();
+        [SerializeField] public new string name;
+        [SerializeField] public bool isInteractable;
+
+        protected PlayerInteraction playerInteraction;
+
+        protected Dictionary<string, string> scenes = new Dictionary<string, string>();
+
+        private void Start() {
+            playerInteraction = GameObject.FindWithTag("Player").GetComponent<PlayerInteraction>();
         }
-    }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.tag.Equals("Player")) playerInteraction.currentInteractable = null;
+        public virtual void InteractWith() {
+            if(isInteractable)
+                Debug.Log("Interacted with " + name);
+            else
+                Debug.Log("Can't interact with " + name);
+        }
+    
+        public void ChangeState() {
+            isInteractable = !isInteractable;
+        }
+
+        private void OnTriggerStay2D(Collider2D other)
+        {
+            if (other.tag.Equals("Player")) {
+                Debug.Log("Player in " + name);
+                playerInteraction.currentInteractable = this;
+                playerInteraction.isNearInteractable = true;
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D other) {
+            if (other.tag.Equals("Player")) {
+                playerInteraction.currentInteractable = null;
+                playerInteraction.isNearInteractable = false;
+            }
+        }
     }
 }

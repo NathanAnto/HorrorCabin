@@ -67,20 +67,18 @@ public class PlayerController : MonoBehaviour
 			mRigidbody2D.velocity = Vector3.SmoothDamp(mRigidbody2D.velocity, targetVelocity, ref mVelocity, mMovementSmoothing);
 
 			// If the input is moving the player right and the player is facing left...
-			if (move > 0 && !mFacingRight)
-			{
+			if (move > 0 && !mFacingRight) {
 				// ... flip the player.
 				Flip();
 			}
 			// Otherwise if the input is moving the player left and the player is facing right...
-			else if (move < 0 && mFacingRight)
-			{
+			else if (move < 0 && mFacingRight) {
 				// ... flip the player.
 				Flip();
 			}
 		}
 		// If the player should jump...
-		if (mGrounded && jump)
+		if (mGrounded && jump && mRigidbody2D.velocity.y == 0)
 		{
 			// Add a vertical force to the player.
 			mGrounded = false;
