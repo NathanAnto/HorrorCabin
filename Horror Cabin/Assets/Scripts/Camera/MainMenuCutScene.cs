@@ -1,24 +1,21 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Cinemachine;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuCutScene : MonoBehaviour
 {
-    [SerializeField] private new CinemachineVirtualCamera camera;
-    [SerializeField] private Transform cabinTransform;
-    [SerializeField] private Transform playerTransform;
+    [SerializeField] private CameraController cameraAnimationController;
+    private bool cutsceneState = true;
 
-    // Start is called before the first frame update
-    void Start() {
-        camera.m_Lens.OrthographicSize = 25;
-        camera.Follow = cabinTransform;
+    private void Start() {
+        cameraAnimationController = GameObject.Find("StateCamera").GetComponent<CameraController>();
+        
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("ForestScene")) {
+            cameraAnimationController.TriggerCutscene("MainMenuCutScene", cutsceneState);
+        }
     }
 
-    public void SwitchToPlayer() {
-        camera.Follow = playerTransform;
-        camera.m_Lens.OrthographicSize = 10;
+    public void TriggerCutscene() {
+        cutsceneState = !cutsceneState;
+        cameraAnimationController.TriggerCutscene("MainMenuCutScene", cutsceneState);
     }
 }

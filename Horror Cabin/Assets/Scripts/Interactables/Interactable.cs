@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,10 +13,17 @@ namespace Interactables
 
         protected PlayerInteraction playerInteraction;
 
-        protected Dictionary<string, string> scenes = new Dictionary<string, string>();
+        private ControlDialogBehaviour dialogUI;
+        protected ControlSpeechBehaviour speechUI;
 
-        private void Start() {
+        private void Start()
+        {
+            dialogUI = GameObject.Find("DialogUI").GetComponent<ControlDialogBehaviour>();
+            speechUI = GameObject.Find("SpeechUI").GetComponent<ControlSpeechBehaviour>();
             playerInteraction = GameObject.FindWithTag("Player").GetComponent<PlayerInteraction>();
+            
+            dialogUI.transform.GetChild(0).gameObject.SetActive(false);
+            speechUI.transform.GetChild(0).gameObject.SetActive(false);
         }
 
         public virtual void InteractWith() {
@@ -28,11 +36,16 @@ namespace Interactables
         public void ChangeState() {
             isInteractable = !isInteractable;
         }
-
-        private void OnTriggerStay2D(Collider2D other)
-        {
+        
+        private void OnTriggerEnter2D(Collider2D other) {
             if (other.tag.Equals("Player")) {
-                Debug.Log("Player in " + name);
+                playerInteraction.NearInteractable();
+            }
+        }
+
+        private void OnTriggerStay2D(Collider2D other) {
+            if (other.tag.Equals("Player")) {
+                dialogUI.transform.GetChild(0).gameObject.SetActive(true);
                 playerInteraction.currentInteractable = this;
                 playerInteraction.isNearInteractable = true;
             }
@@ -40,6 +53,7 @@ namespace Interactables
 
         private void OnTriggerExit2D(Collider2D other) {
             if (other.tag.Equals("Player")) {
+                dialogUI.transform.GetChild(0).gameObject.SetActive(false);
                 playerInteraction.currentInteractable = null;
                 playerInteraction.isNearInteractable = false;
             }
