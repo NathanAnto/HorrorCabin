@@ -15,11 +15,13 @@ namespace Interactables
 
         private ControlDialogBehaviour dialogUI;
         protected ControlSpeechBehaviour speechUI;
+        protected TypeWriterEffect typewriterEffect;
 
-        private void Start()
+        private void Awake()
         {
             dialogUI = GameObject.Find("DialogUI").GetComponent<ControlDialogBehaviour>();
             speechUI = GameObject.Find("SpeechUI").GetComponent<ControlSpeechBehaviour>();
+            typewriterEffect = GameObject.Find("TypewriterEffect").GetComponent<TypeWriterEffect>();
             playerInteraction = GameObject.FindWithTag("Player").GetComponent<PlayerInteraction>();
             
             dialogUI.transform.GetChild(0).gameObject.SetActive(false);

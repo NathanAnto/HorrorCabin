@@ -23,19 +23,9 @@ namespace Interactables.Objects
                         break;
                     }
                 }
-                print("CHANGING SCENE");
+            } else {
+                typewriterEffect.Run(playerInteraction.currentMission);
             }
-            else {
-                coroutine = Speech();
-                StartCoroutine(coroutine);
-            }
-        }
-
-        // TODO - Make text slowly appear
-        private IEnumerator Speech() {
-            speechUI.transform.GetChild(0).gameObject.SetActive(true);
-            yield return new WaitForSeconds(3);
-            speechUI.transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 }

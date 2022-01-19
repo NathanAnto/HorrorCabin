@@ -9,8 +9,8 @@ using UnityEngine.UI;
 public class ControlSpeechBehaviour : MonoBehaviour
 {
     [SerializeField] private Text description;
-    [SerializeField] private PlayerInteraction playerInteraction;
-
+    
+    private PlayerInteraction playerInteraction;
     private ControlSpeech controlSpeech;
 
     private void Awake()
@@ -25,7 +25,7 @@ public class ControlSpeechBehaviour : MonoBehaviour
     }
 
     private void OnTextChanged() {
-        print("Updating speech");
-        description.text = playerInteraction.currentMission;
+        // GetComponent<TypeWriterEffect>().Run(playerInteraction.currentMission);
+        // description.text = playerInteraction.currentMission;
     }
 }

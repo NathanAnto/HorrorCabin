@@ -1,16 +1,19 @@
+using System.Collections;
+using UnityEngine;
+
 namespace Interactables.Objects
 {
-    public class Key : Milestone
+    public class Fire : Interactable
     {
+        private IEnumerator coroutine;
+        
         public override void InteractWith()
         {
             if (isInteractable) {
-                TriggerMilestoneEvent();
-                // Destroy(gameObject);
+                // Start Fire animation
             } else {
                 typewriterEffect.Run(playerInteraction.currentMission);
             }
-            
         }
     }
 }

@@ -15,7 +15,6 @@ public class SpeechUpdater : MonoBehaviour
     }
 
     public void UpdateIndex() {
-        // print("Updating speech from " + Speeches.missionIndex + " to " + (Speeches.missionIndex + 1));
         Speeches.UpdateIndex();
         playerInteraction.currentMission = playerInteraction.SpeechListMain.speeches[Speeches.missionIndex];
         controlSpeech.ChangeText();
