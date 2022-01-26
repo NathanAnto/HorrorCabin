@@ -8,7 +8,6 @@ namespace Interactables.Objects
 {
     public class Door : Interactable
     {
-        private IEnumerator coroutine;
         public override void InteractWith() {
             if (isInteractable) {
                 // Change scene to appropriate room
@@ -24,7 +23,7 @@ namespace Interactables.Objects
                     }
                 }
             } else {
-                typewriterEffect.Run(playerInteraction.currentMission);
+                base.InteractWith();
             }
         }
     }

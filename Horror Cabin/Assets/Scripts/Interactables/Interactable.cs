@@ -19,7 +19,7 @@ namespace Interactables
 
         private void Awake()
         {
-            dialogUI = GameObject.Find("DialogUI").GetComponent<ControlDialogBehaviour>();
+            dialogUI = GameObject.Find("ControlUI").GetComponent<ControlDialogBehaviour>();
             speechUI = GameObject.Find("SpeechUI").GetComponent<ControlSpeechBehaviour>();
             typewriterEffect = GameObject.Find("TypewriterEffect").GetComponent<TypeWriterEffect>();
             playerInteraction = GameObject.FindWithTag("Player").GetComponent<PlayerInteraction>();
@@ -29,10 +29,7 @@ namespace Interactables
         }
 
         public virtual void InteractWith() {
-            if(isInteractable)
-                Debug.Log("Interacted with " + name);
-            else
-                Debug.Log("Can't interact with " + name);
+            typewriterEffect.Run(playerInteraction.currentMission);
         }
     
         public void ChangeState() {

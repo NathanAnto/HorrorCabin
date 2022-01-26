@@ -14,4 +14,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Story/CabinScene.unity
     guid: 07c4576b65963b946904c9d9659490b3
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: f9cabd1ad0b7799448cdf1e02d75adf7, type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: 2a1193b123d8b4b4389a520b2d937cb4, type: 2}

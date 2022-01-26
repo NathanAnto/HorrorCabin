@@ -1,6 +1,6 @@
 using System;
 using Interactables;
-using UnityEditor;
+using System.Linq;
 using UnityEngine;
 
 namespace Player
@@ -11,9 +11,10 @@ namespace Player
         public string currentMission { get; set; }
         public Interactable currentInteractable { get; set; }
         public bool isNearInteractable { get; set; }
-    
+
         private ControlDialog controlDialog;
         private ControlSpeech controlSpeech;
+        private GameObject OptionsCanvas;
 
         private void Awake() {
             currentMission = SpeechListMain.speeches[Speeches.missionIndex];
@@ -22,6 +23,8 @@ namespace Player
         }
 
         private void Start() {
+            OptionsCanvas = Resources.FindObjectsOfTypeAll<GameObject>().ToList()
+                .Find(obj => obj.name == "OptionsCanvas");
             controlSpeech.ChangeText();
         }
 
@@ -33,6 +36,10 @@ namespace Player
             // Toggle flashlight
             if (Input.GetKeyDown(KeyCode.F)) {
                 // TODO - Create flashlight
+            }
+            // Toggle pause
+            if (Input.GetKeyDown(KeyCode.Escape) && GetComponent<PlayerMovement>().enabled) {
+                OptionsCanvas.SetActive(!OptionsCanvas.activeSelf);
             }
         }
 

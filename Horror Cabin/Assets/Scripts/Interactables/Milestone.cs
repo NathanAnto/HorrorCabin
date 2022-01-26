@@ -1,3 +1,5 @@
+using System;
+
 namespace Interactables
 {
     [System.Serializable]
@@ -12,6 +14,8 @@ namespace Interactables
             foreach (var interactable in affectedInteractables) {
                 interactable.ChangeState();
             }
+
+            affectedInteractables = Array.Empty<Interactable>();
         }
     }
 }

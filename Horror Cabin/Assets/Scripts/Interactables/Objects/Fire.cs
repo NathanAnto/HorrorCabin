@@ -3,14 +3,12 @@ using UnityEngine;
 
 namespace Interactables.Objects
 {
-    public class Fire : Interactable
+    public class Fire : Milestone
     {
-        private IEnumerator coroutine;
-        
         public override void InteractWith()
         {
             if (isInteractable) {
-                // Start Fire animation
+                TriggerMilestoneEvent();
             } else {
                 typewriterEffect.Run(playerInteraction.currentMission);
             }
