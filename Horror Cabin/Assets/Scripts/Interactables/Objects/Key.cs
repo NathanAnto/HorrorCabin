@@ -6,9 +6,10 @@ namespace Interactables.Objects
         {
             if (isInteractable) {
                 TriggerMilestoneEvent();
-                Destroy(gameObject);
+            } else {
+                typewriterEffect.Run(playerInteraction.currentMission);
             }
-            else print("Can't interact with " + name);
+            
         }
     }
 }

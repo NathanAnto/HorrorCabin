@@ -1,25 +1,30 @@
+using System;
+using System.Collections;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Interactables.Objects
 {
-    public class Door : Interactable {
-        public override void InteractWith()
-        {
+    public class Door : Interactable
+    {
+        public override void InteractWith() {
             if (isInteractable) {
                 // Change scene to appropriate room
                 switch (name) {
-                    case "Open Window":
+                    case "Open Window": {
+                        GetComponent<SpeechUpdater>().UpdateIndex();
                         SceneManager.LoadScene("CabinScene");
                         break;
-                    case "Exit Window":
+                    }
+                    case "Exit Window": {
                         SceneManager.LoadScene("ForestScene");
                         break;
+                    }
                 }
-                
-                print("CHANGING SCENE");
+            } else {
+                base.InteractWith();
             }
-            else print("Can't interact with " + name);
         }
     }
 }
