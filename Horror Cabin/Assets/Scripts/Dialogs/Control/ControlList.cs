@@ -11,7 +11,9 @@ public class ControlList : ScriptableObject
 
 [Serializable]
 public class Control {
+    // TODO - Add controller support if enough time
     public string key;
+    // public string controllerKey;
     public string description;
 
     public bool GetByKey(string key) {

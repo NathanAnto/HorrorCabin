@@ -14,7 +14,7 @@ namespace Player
 
         private ControlDialog controlDialog;
         private ControlSpeech controlSpeech;
-        private GameObject OptionsCanvas;
+        private Canvas OptionsCanvas;
 
         private void Awake() {
             currentMission = SpeechListMain.speeches[Speeches.missionIndex];
@@ -23,8 +23,8 @@ namespace Player
         }
 
         private void Start() {
-            OptionsCanvas = Resources.FindObjectsOfTypeAll<GameObject>().ToList()
-                .Find(obj => obj.name == "OptionsCanvas");
+            OptionsCanvas = Resources.FindObjectsOfTypeAll<Canvas>().ToList()
+                .Find(obj => obj.gameObject.name == "OptionsCanvas");
             controlSpeech.ChangeText();
         }
 
@@ -36,10 +36,6 @@ namespace Player
             // Toggle flashlight
             if (Input.GetKeyDown(KeyCode.F)) {
                 // TODO - Create flashlight
-            }
-            // Toggle pause
-            if (Input.GetKeyDown(KeyCode.Escape) && GetComponent<PlayerMovement>().enabled) {
-                OptionsCanvas.SetActive(!OptionsCanvas.activeSelf);
             }
         }
 

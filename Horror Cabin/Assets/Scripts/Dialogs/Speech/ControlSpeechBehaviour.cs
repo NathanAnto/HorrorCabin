@@ -16,16 +16,10 @@ public class ControlSpeechBehaviour : MonoBehaviour
     private void Awake()
     {
         controlSpeech = ControlSpeech.GetInstance();
-        controlSpeech.TextChanged += OnTextChanged;
         SceneManager.sceneLoaded += SceneLoaded;
     }
 
     private void SceneLoaded(Scene arg0, LoadSceneMode arg1) {
         playerInteraction = GameObject.Find("Player").GetComponent<PlayerInteraction>();
-    }
-
-    private void OnTextChanged() {
-        // GetComponent<TypeWriterEffect>().Run(playerInteraction.currentMission);
-        // description.text = playerInteraction.currentMission;
     }
 }

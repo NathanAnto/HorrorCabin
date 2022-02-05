@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Player
@@ -36,6 +37,8 @@ namespace Player
         private Rigidbody2D rb;
         private CapsuleCollider2D cc;
 
+        private void Awake() => GameStateManager.Instance.OnGameStateChanged += OnGameStateChanged;
+
         private void Start()
         {
             rb = GetComponent<Rigidbody2D>();
@@ -44,16 +47,28 @@ namespace Player
             capsuleColliderSize = cc.size;
         }
 
+        private void OnGameStateChanged(GameState newGameState) {
+            enabled = newGameState == GameState.Gameplay;
+            Debug.Log("Changed enabled " + enabled);
+        }
+
         private void Update()
         {
-            CheckInput();     
+            if (!enabled) return;
+            
+            CheckInput();
         }
 
         private void FixedUpdate()
         {
+            if (!enabled) return;
             CheckGround();
             SlopeCheck();
             ApplyMovement();
+        }
+
+        private void OnDestroy() {
+            GameStateManager.Instance.OnGameStateChanged -= OnGameStateChanged;
         }
 
         private void CheckInput()

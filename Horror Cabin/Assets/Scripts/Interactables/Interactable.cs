@@ -13,18 +13,18 @@ namespace Interactables
 
         protected PlayerInteraction playerInteraction;
 
-        private ControlDialogBehaviour dialogUI;
+        private ControlDialogBehaviour controlUI;
         protected ControlSpeechBehaviour speechUI;
         protected TypeWriterEffect typewriterEffect;
 
         private void Awake()
         {
-            dialogUI = GameObject.Find("ControlUI").GetComponent<ControlDialogBehaviour>();
+            controlUI = GameObject.Find("ControlUI").GetComponent<ControlDialogBehaviour>();
             speechUI = GameObject.Find("SpeechUI").GetComponent<ControlSpeechBehaviour>();
             typewriterEffect = GameObject.Find("TypewriterEffect").GetComponent<TypeWriterEffect>();
             playerInteraction = GameObject.FindWithTag("Player").GetComponent<PlayerInteraction>();
             
-            dialogUI.transform.GetChild(0).gameObject.SetActive(false);
+            controlUI.transform.GetChild(0).gameObject.SetActive(false);
             speechUI.transform.GetChild(0).gameObject.SetActive(false);
         }
 
@@ -44,7 +44,7 @@ namespace Interactables
 
         private void OnTriggerStay2D(Collider2D other) {
             if (other.tag.Equals("Player")) {
-                dialogUI.transform.GetChild(0).gameObject.SetActive(true);
+                controlUI.transform.GetChild(0).gameObject.SetActive(true);
                 playerInteraction.currentInteractable = this;
                 playerInteraction.isNearInteractable = true;
             }
@@ -52,7 +52,7 @@ namespace Interactables
 
         private void OnTriggerExit2D(Collider2D other) {
             if (other.tag.Equals("Player")) {
-                dialogUI.transform.GetChild(0).gameObject.SetActive(false);
+                controlUI.transform.GetChild(0).gameObject.SetActive(false);
                 playerInteraction.currentInteractable = null;
                 playerInteraction.isNearInteractable = false;
             }
