@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Dialogs.Speech;
 using Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;

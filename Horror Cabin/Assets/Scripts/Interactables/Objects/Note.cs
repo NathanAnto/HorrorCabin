@@ -1,32 +1,68 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Interactables;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Note : Interactable
+namespace Interactables.Objects
 {
-    [SerializeField] private Animator animator;
-    
-    public override void InteractWith()
+    public class Note : Interactable
     {
-        if (isInteractable) {
-            // Show next note
-            animator.SetTrigger("OpenNote");
-            isInteractable = false;
-            GameStateManager.Instance.SetState(GameState.Paused);
-        } else {
-            base.InteractWith();
-        }
-    }
+        [SerializeField] private NoteList noteList;
+        
+        private Animator animator;
+        private Text textUI;
+        private event Action OnNoteOpen;
 
-    private void FixedUpdate()
-    {
-        if (!isInteractable && Input.GetKeyDown(KeyCode.E))
+        public override void InteractWith()
         {
-            GameStateManager.Instance.SetState(GameState.Gameplay);
-            animator.SetTrigger("CloseNote");
-            // Destroy(gameObject);
+            var noteUI = GameObject.Find("NoteUI").transform.GetChild(0);
+            animator = noteUI.GetComponent<Animator>();
+            textUI = noteUI.transform.GetChild(0).GetComponent<Text>();
+            Debug.Log("Note", noteUI);
+        
+            if (isInteractable) {
+                // Show next note
+                animator.SetTrigger("OpenNote");
+                isInteractable = false;
+                textUI.text = noteList.notes[NoteManager.noteIndex];
+                NoteManager.UpdateIndex();
+                GameStateManager.Instance.SetState(GameState.Paused);
+                StartCoroutine(WaitAfterNoteOpen());
+            } else {
+                base.InteractWith();
+            }
+        }
+
+        /// <summary>
+        /// Wait 3 seconds before being able to close note
+        /// </summary>
+        private IEnumerator WaitAfterNoteOpen()
+        {
+            yield return new WaitForSeconds(3);
+            // After 3 seconds let player close note
+            OnNoteOpen += CloseNote;
+        }
+
+        private void Update() {
+            if (Input.anyKey) {
+                OnNoteOpen?.Invoke();
+                OnNoteOpen -= CloseNote;
+            }
+        }
+    
+        /// <summary>
+        /// Close note if not interactable
+        /// </summary>
+        public void CloseNote()
+        {
+            if (!isInteractable)
+            {
+                print("closing note");
+                GameStateManager.Instance.SetState(GameState.Gameplay);
+                animator.SetTrigger("CloseNote");
+                StopAllCoroutines();
+                Destroy(gameObject);
+            }
         }
     }
 }
